@@ -1,38 +1,38 @@
-  <!DOCTYPE html>
-  <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
-  <head>
+<html>
+
+<head>
   <meta charset="utf-8"> <!-- utf-8 works for most cases -->
   <meta name="viewport" content="width=device-width"> <!-- Forcing initial-scale shouldn't be necessary -->
   <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!-- Use the latest (edge) version of IE rendering engine -->
-  <meta name="x-apple-disable-message-reformatting">  <!-- Disable auto-scale in iOS 10 Mail entirely -->
-  <meta name="format-detection" content="telephone=no,address=no,email=no,date=no,url=no"> <!-- Tell iOS not to automatically link certain text strings. -->
+  <meta name="x-apple-disable-message-reformatting"> <!-- Disable auto-scale in iOS 10 Mail entirely -->
+  <meta name="format-detection" content="telephone=no,address=no,email=no,date=no,url=no">
+  <!-- Tell iOS not to automatically link certain text strings. -->
   <meta name="color-scheme" content="light">
   <meta name="supported-color-schemes" content="light">
-  <title>TITLE</title> <!-- The title tag shows in email notifications, like Android 4.4. -->
+  <title>{subject}</title> <!-- The title tag shows in email notifications, like Android 4.4. -->
 
   <!-- What it does: Makes background images in 72ppi Outlook render at correct size. -->
   <!--[if gte mso 9]>
-  <xml>
-  <o:OfficeDocumentSettings>
-  <o:AllowPNG/>
-  <o:PixelsPerInch>96</o:PixelsPerInch>
-  </o:OfficeDocumentSettings>
-  </xml>
-  <![endif]-->
+    <xml>
+        <o:OfficeDocumentSettings>
+            <o:PixelsPerInch>96</o:PixelsPerInch>
+        </o:OfficeDocumentSettings>
+    </xml>
+    <![endif]-->
 
   <!-- Web Font / @font-face : BEGIN -->
   <!-- NOTE: If web fonts are not required, lines 23 - 41 can be safely removed. -->
 
   <!-- Desktop Outlook chokes on web font references and defaults to Times New Roman, so we force a safe fallback font. -->
   <!--[if mso]>
-  <style>
-  * {
-  font-family: sans-serif !important;
-  }
-  </style>
-  <![endif]-->
+        <style>
+            * {
+                font-family: sans-serif !important;
+            }
+        </style>
+    <![endif]-->
 
-  <!-- All other clients get the webfont reference; some will render the font and others will silently fail to the fallbacks. More on that here: http://stylecampaign.com/blog/2015/02/webfont-support-in-email/ -->
+  <!-- All other clients get the webfont reference; some will render the font and others will silently fail to the fallbacks. More on that here: https://web.archive.org/web/20190717120616/http://stylecampaign.com/blog/2015/02/webfont-support-in-email/ -->
   <!--[if !mso]><!-->
   <!-- insert web font reference, eg: <link href='https://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'> -->
   <!--<![endif]-->
@@ -41,883 +41,819 @@
 
   <!-- CSS Reset : BEGIN -->
   <style>
+    /* What it does: Tells the email client that only light styles are provided but the client can transform them to dark. A duplicate of meta color-scheme meta tag above. */
+    :root {
+      color-scheme: light;
+      supported-color-schemes: light;
+    }
 
-  /* What it does: Tells the email client that only light styles are provided but the client can transform them to dark. A duplicate of meta color-scheme meta tag above. */
-  :root {
-    color-scheme: light;
-    supported-color-schemes: light;
-  }
+    /* What it does: Remove spaces around the email design added by some email clients. */
+    /* Beware: It can remove the padding / Margin and add a background color to the compose a reply window. */
+    html,
+    body {
+      Margin: 0 auto !important;
+      padding: 0 !important;
+      height: 100% !important;
+      width: 100% !important;
+    }
 
-  /* What it does: Remove spaces around the email design added by some email clients. */
-  /* Beware: It can remove the padding / margin and add a background color to the compose a reply window. */
-  html,
-  body {
-    margin: 0 auto !important;
-    padding: 0 !important;
-    height: 100% !important;
-    width: 100% !important;
-  }
+    /* What it does: Stops email clients resizing small text. */
+    * {
+      -ms-text-size-adjust: 100%;
+      -webkit-text-size-adjust: 100%;
+    }
 
-  /* What it does: Stops email clients resizing small text. */
-  * {
-    -ms-text-size-adjust: 100%;
-    -webkit-text-size-adjust: 100%;
-  }
+    /* What it does: Centers email on Android 4.4 */
+    div[style*="Margin: 16px 0"] {
+      Margin: 0 !important;
+    }
 
-  /* What it does: Centers email on Android 4.4 */
-  div[style*="margin: 16px 0"] {
-    margin: 0 !important;
-  }
+    /* What it does: Stops Outlook from adding extra spacing to tables. */
+    table,
+    td {
+      mso-table-lspace: 0pt !important;
+      mso-table-rspace: 0pt !important;
+    }
 
-  /* What it does: forces Samsung Android mail clients to use the entire viewport */
-  #MessageViewBody, #MessageWebViewDiv{
-    width: 100% !important;
-  }
-
-  /* What it does: Stops Outlook from adding extra spacing to tables. */
-  table,
-  td {
-    mso-table-lspace: 0pt !important;
-    mso-table-rspace: 0pt !important;
-  }
-
-  /* What it does: Replaces default bold style. */
-  th {
+    /* What it does: Replaces default bold style. */
+    th {
       font-weight: normal;
-  }
-
-  /* What it does: Fixes webkit padding issue. */
-  table {
-    border-spacing: 0 !important;
-    border-collapse: collapse !important;
-    table-layout: fixed !important;
-    margin: 0 auto !important;
-  }
-
-  /* What it does: Prevents Windows 10 Mail from underlining links despite inline CSS. Styles for underlined links should be inline. */
-  a {
-    text-decoration: none;
-  }
-
-  /* What it does: Uses a better rendering method when resizing images in IE. */
-  img {
-    -ms-interpolation-mode:bicubic;
-  }
-
-  /* What it does: A work-around for email clients meddling in triggered links. */
-  a[x-apple-data-detectors],  /* iOS */
-  .unstyle-auto-detected-links a,
-  .aBn {
-    border-bottom: 0 !important;
-    cursor: default !important;
-    color: inherit !important;
-    text-decoration: none !important;
-    font-size: inherit !important;
-    font-family: inherit !important;
-    font-weight: inherit !important;
-    line-height: inherit !important;
-  }
-
-  /* What it does: Prevents Gmail from changing the text color in conversation threads. */
-  .im {
-    color: inherit !important;
-  }
-
-  /* What it does: Prevents Gmail from displaying a download button on large, non-linked images. */
-  .a6S {
-    display: none !important;
-    opacity: 0.01 !important;
-  }
-  /* If the above doesn't work, add a .g-img class to any image in question. */
-  img.g-img + div {
-    display: none !important;
-  }
-
-  /* What it does: Removes right gutter in Gmail iOS app: https://github.com/TedGoas/Cerberus/issues/89  */
-  /* Create one of these media queries for each additional viewport size you'd like to fix */
-
-  /* iPhone 4, 4S, 5, 5S, 5C, and 5SE */
-  @media only screen and (min-device-width: 320px) and (max-device-width: 374px) {
-    u ~ div .email-container {
-      min-width: 320px !important;
     }
-  }
-  /* iPhone 6, 6S, 7, 8, and X */
-  @media only screen and (min-device-width: 375px) and (max-device-width: 413px) {
-    u ~ div .email-container {
-      min-width: 375px !important;
-    }
-  }
-  /* iPhone 6+, 7+, and 8+ */
-  @media only screen and (min-device-width: 414px) {
-    u ~ div .email-container {
-      min-width: 414px !important;
-    }
-  }
 
+    /* What it does: Fixes webkit padding issue. */
+    table {
+      border-spacing: 0 !important;
+      border-collapse: collapse !important;
+      table-layout: fixed !important;
+      Margin: 0 auto !important;
+    }
+
+    /* What it does: Prevents Windows 10 Mail from underlining links despite inline CSS. Styles for underlined links should be inline. */
+    a {
+      text-decoration: none;
+    }
+
+    /* What it does: Uses a better rendering method when resizing images in IE. */
+    img {
+      -ms-interpolation-mode: bicubic;
+    }
+
+    /* What it does: A work-around for email clients meddling in triggered links. */
+    a[x-apple-data-detectors],
+    /* iOS */
+    .unstyle-auto-detected-links a,
+    .aBn {
+      border-bottom: 0 !important;
+      cursor: default !important;
+      color: inherit !important;
+      text-decoration: none !important;
+      font-size: inherit !important;
+      font-family: inherit !important;
+      font-weight: inherit !important;
+      line-height: inherit !important;
+    }
+
+    /* What it does: Prevents Gmail from changing the text color in conversation threads. */
+    .im {
+      color: inherit !important;
+    }
+
+    /* If the above doesn't work, add a .g-img class to any image in question. */
+    img.g-img+div {
+      display: none !important;
+    }
+
+    /* What it does: Removes right gutter in Gmail iOS app: https://github.com/TedGoas/Cerberus/issues/89  */
+    /* Create one of these media queries for each additional viewport size you'd like to fix */
+    /* iPhone 4, 4S, 5, 5S, 5C, and 5SE */
+    @media only screen and (min-device-width: 320px) and (max-device-width: 374px) {
+      u~div .email-container {
+        min-width: 320px !important;
+      }
+    }
+
+    /* iPhone 6, 6S, 7, 8, and X */
+    @media only screen and (min-device-width: 375px) and (max-device-width: 413px) {
+      u~div .email-container {
+        min-width: 375px !important;
+      }
+    }
+
+    /* iPhone 6+, 7+, and 8+ */
+    @media only screen and (min-device-width: 414px) {
+      u~div .email-container {
+        min-width: 414px !important;
+      }
+    }
   </style>
   <!-- CSS Reset : END -->
 
   <!-- Progressive Enhancements : BEGIN -->
   <style>
-
-  /* What it does: Hover styles for buttons */
-  .button-td,
-  .button-a {
-    transition: all 100ms ease-in;
-  }
-  .button-td-primary:hover,
-  .button-a-primary:hover {
-    background: #555555 !important;
-    border-color: #555555 !important;
-  }
-
-  /* Media Queries */
-  @media screen and (max-width: 600px) {
-
-    .email-container {
-      width: 100% !important;
-      margin: auto !important;
+    /* Table styles */
+    *[data-slot="text"] td {
+      padding: 8px;
     }
 
-    /* What it does: Forces table cells into full-width rows. */
-    .stack-column,
-    .stack-column-center {
-      display: block !important;
-      width: 100% !important;
-      max-width: 100% !important;
-      direction: ltr !important;
-    }
-    /* And center justify these ones. */
-    .stack-column-center {
-      text-align: center !important;
+    .fr-alternate-rows tr {}
+
+    .fr-dashed-borders tr {
+      border-bottom: 1px solid #E9E9E9;
     }
 
-    /* What it does: Generic utility class for centering. Useful for images, buttons, and nested tables. */
-    .center-on-narrow {
-      text-align: center !important;
-      display: block !important;
-      margin-left: auto !important;
-      margin-right: auto !important;
-      float: none !important;
-    }
-    table.center-on-narrow {
-      display: inline-block !important;
+    td.fr-thick {
+      font-weight: bold;
     }
 
-    /* What it does: Adjust typography on small screens to improve readability */
-    .email-container p {
-      font-size: 16px !important;
+    td.fr-highlighted {
+      background-color: #E9E9E9;
     }
 
-    .narrow-padding-on-narrow{
-      padding-left: 15px !important;
-      padding-right: 15px !important;
+    th.aligncell-left {
+      text-align: left;
     }
-  }
-  
 
+    /* Media Queries */
+    @media screen and (max-width: 600px) {
+      .email-container {
+        width: 100% !important;
+        Margin: auto !important;
+      }
+
+      /* What it does: Forces table cells into full-width rows. */
+      .stack-column,
+      .stack-column-center {
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        direction: ltr !important;
+      }
+
+      /* And center justify these ones. */
+      .stack-column-center {
+        text-align: center !important;
+      }
+
+      /* What it does: Generic utility class for centering. Useful for images, buttons, and nested tables. */
+
+      .button-td-primary:hover,
+    .button-td-primary:focus {
+      background: #555555 !important;
+    }
+
+      .center-on-narrow {
+        text-align: center !important;
+        display: block !important;
+        Margin-left: auto !important;
+        Margin-right: auto !important;
+        float: none !important;
+      }
+
+      table.center-on-narrow {
+        display: inline-block !important;
+      }
+
+      /* What it does: Adjust typography on small screens to improve readability */
+      .email-container p,
+      .email-container li {
+        font-size: 17px !important;
+      }
+    }
   </style>
   <!-- Progressive Enhancements : END -->
 
-  </head>
-  <!--
-  The email background color (#EBEBEB) is defined in three places:
-  1. body tag: for most email clients
-  2. center tag: for Gmail and Inbox mobile apps and web versions of Gmail, GSuite, Inbox, Yahoo, AOL, Libero, Comcast, freenet, Mail.ru, Orange.fr
-  3. mso conditional: For Windows 10 Mail
-  -->
-  <body width="100%" style="margin: 0; padding: 0 !important; mso-line-height-rule: exactly; background-color: #EBEBEB;">
-    <center role="article" aria-roledescription="email" lang="en" style="width: 100%; background-color: #EBEBEB;">
+</head>
+<!--
+	The email background color (#EBE9E4) is defined in three places:
+	1. body tag: for most email clients
+	2. center tag: for Gmail and Inbox mobile apps and web versions of Gmail, GSuite, Inbox, Yahoo, AOL, Libero, Comcast, freenet, Mail.ru, Orange.fr
+	3. mso conditional: For Windows 10 Mail
+
+  4. BRAND GRAY #F7F7F7 rgb(247, 247, 247);
+-->
+
+<body width="100%" style="Margin: 0; padding: 0 !important; mso-line-height-rule: exactly; background-color: #EBE9E4;"
+  class="email-bg">
+  <center role="article" aria-roledescription="email" lang="en" style="width: 100%; background-color: #EBE9E4;"
+    class="email-bg">
     <!--[if mso | IE]>
-    <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #EBEBEB;">
+    <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #EBE9E4;" class="email-bg">
     <tr>
     <td>
     <![endif]-->
 
     <!-- Visually Hidden Preheader Text : BEGIN -->
     <div style="max-height:0; overflow:hidden; mso-hide:all;" aria-hidden="true">
-    (Optional) This text will appear in the inbox preview, but not the email body. It can be used to supplement the email subject line or even summarize the email's contents. Extended text preheaders (~490 characters) seems like a better UX for anyone using a screenreader or voice-command apps like Siri to dictate the contents of an email. If this text is not included, email clients will automatically populate it using the text (including image alt text) at the start of the email's body.
+      (Optional) This text will appear in the inbox preview, but not the email body. It can be used to supplement the
+      email subject line or even summarize the email's contents. Extended text preheaders (~490 characters) seems like a
+      better UX for anyone using a screenreader or voice-command apps like Siri to dictate the contents of an email. If
+      this text is not included, email clients will automatically populate it using the text (including image alt text)
+      at the start of the email's body.
     </div>
     <!-- Visually Hidden Preheader Text : END -->
 
     <!-- Create white space after the desired preview text so email clients don’t pull other distracting text into the inbox preview. Extend as necessary. -->
     <!-- Preview Text Spacing Hack : BEGIN -->
-    <div style="display: none; font-size: 1px; line-height: 1px; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden; mso-hide: all; font-family: sans-serif;">
-    &zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;
+    <div
+      style="display: none; font-size: 1px; line-height: 1px; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden; mso-hide: all; font-family: sans-serif;">
+      &zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;
     </div>
     <!-- Preview Text Spacing Hack : END -->
 
-    <!-- Email Body : BEGIN -->
-    <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" style="margin: auto;" class="email-container">
-      <!-- Email Header : BEGIN -->
-      <tr>
-        <td style="padding: 20px 0; text-align: center">
-          <img src="https://via.placeholder.com/200x50" width="200" height="50" alt="alt_text" border="0" style="height: auto; background: transparent; ">
-        </td>
-      </tr>
-      <!-- Email Header : END -->
-
-      <!-- Hero Image, Flush : BEGIN -->
-      <tr>
-        <td style="background-color: #ffffff;">
-          <img src="https://via.placeholder.com/1200x600" width="600" height="" alt="alt_text" border="0" style="width: 100%; max-width: 600px; height: auto; background: transparent; margin: auto; display: block;" class="g-img">
-        </td>
-      </tr>
-      <!-- Hero Image, Flush : END -->
-
-      <!-- Clear Spacer : BEGIN -->
-      <tr>
-        <td aria-hidden="true" height="40" style="font-size: 0px; line-height: 0px;">
-        &nbsp;
-        </td>
-      </tr>
-      <!-- Clear Spacer : END -->
-
-      <!-- Email Header : HYPERLINKED IMAGES : BEGIN -->
-      <tr>
-        <td style="padding: 20px 0 0; text-align: center">
-          <a href="https://google.com"><img src="https://via.placeholder.com/200x50" width="200" height="50" alt="alt_text" border="0" style="height: auto; background: transparent; "></a>
-        </td>
-      </tr>
-      <!-- Email Header : HYPERLINKED IMAGES : END -->
-
-      <!-- 1 Column Text : BEGIN -->
-      <tr>
-        <td style="">
-          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+    <!-- Email Header + 2 Columns : BEGIN -->
+    <div data-section-wrapper="2">
+      <center>
+        <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="600"
+          style="Margin: 0 auto;" class="email-container">
+          <tbody>
             <tr>
-              <td style="padding: 10px 20px; font-family: sans-serif; font-size: 13px; font-weight: bold; line-height: 20px; color: #555555; text-align: center;">
-               WITH HYPERLINK
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
-      <!-- 1 Column Text : END -->
-
-      <!-- Hero Image, Flush : BEGIN -->
-      <tr>
-        <td style="background-color: #ffffff;">
-          <a href="https://google.com"><img src="https://via.placeholder.com/1200x600" width="600" height="" alt="alt_text" border="0" style="width: 100%; max-width: 600px; height: auto; background: transparent; margin: auto; display: block;" class="g-img"></a>
-        </td>
-      </tr>
-      <!-- Hero Image, Flush : END -->
-
-      <!-- 1 Column Text : BEGIN -->
-      <tr>
-        <td style="">
-          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-            <tr>
-              <td style="padding: 10px 20px; font-family: sans-serif; font-size: 13px; font-weight: bold; line-height: 20px; color: #555555; text-align: center;">
-               WITH HYPERLINK
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
-      <!-- 1 Column Text : END -->
-
-      <!-- Clear Spacer : BEGIN -->
-      <tr>
-        <td aria-hidden="true" height="40" style="font-size: 0px; line-height: 0px;">
-        &nbsp;
-        </td>
-      </tr>
-      <!-- Clear Spacer : END -->
-
-      <!-- 1 Column Text + Button : BEGIN -->
-      <tr>
-        <td style="background-color: #ffffff;">
-          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-            <tr>
-              <td style="padding: 50px 50px 20px; font-family: sans-serif; font-size: 15px; line-height: 20px; color: #555555;" class="narrow-padding-on-narrow">
-                <h1 style="margin: 0 0 10px; font-size: 25px; line-height: 30px; color: #333333; font-weight: normal;">Our Base Template</h1>
-
-                <h3>HEADING TITLE</h3>
-                <!-- SHORT LINE : BEGIN !! DIV ELEMENTS DOESN"T WORK ON OUTLOOK -->
-                <div style="width: 100px; height: 3px; background-color: red;"></div>
-                <!-- SHORT LINE : END -->
-                <p style="font-size: 12px; margin: 0; color: gray">***DIV ELEMENTS DOESN"T WORK ON OUTLOOK</p>
-
-                <p><b>vTiger first name token $contacts-firstname$</b></p>
-                <p><b>Mautic first name token {contactfield=firstname}</b></p>
-                <p style="margin: 0 0 10px;">Sooo this is the template we will be using until further notice. This is a modified version of the original template that can be found <a href="https://raw.githubusercontent.com/TedGoas/Cerberus/master/cerberus-responsive.html"><b>>here<</b></a>. Let us know if you want to add a section or if you have questions.</p>
-                <p>This section has a 50px padding applied to it but will change to 15px when on mobile by adding "class="narrow-padding-on-narrow".</p>
-                <ul style="padding: 0; margin: 0; list-style-type: disc;">
-                  <li style="margin:0 0 10px 20px;" class="list-item-first">A list item.</li>
-                  <li style="margin:0 0 10px 20px;">Another list item here.</li>
-                  <li style="margin: 0 0 0 20px;" class="list-item-last">Everyone gets a list item, list items for everyone!</li>
-                </ul>
-              </td>
-            </tr>
-
-            <tr>
-              <td style="padding: 0 50px 50px;">
-                <!-- Button : BEGIN -->
-                <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: auto;">
-                  <tr>
-                    <td class="button-td button-td-primary" style="border-radius: 4px; background: #222222;">
-                      <a class="button-a button-a-primary" href="https://google.com/" style="background: #222222; border: 1px solid #000000; font-family: sans-serif; font-size: 15px; line-height: 15px; text-decoration: none; padding: 13px 17px; color: #ffffff; display: block; border-radius: 4px; text-align: center;" target="_blank">Centered Primary Button</a>
-                    </td>
-                  </tr>
-                </table>
-                <!-- Button : END -->
-              </td>
-            </tr>
-
-            <!-- FULL WIDTH BUTTON : BEGIN -->
-            <tr>
-              <td style="padding: 0 50px 50px; text-align: center;">
-                <!-- Button : BEGIN -->
-                <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: auto;">
-                  <tr>
-                    <td class="button-td button-td-primary" style="border-radius: 4px; background: #222222; text-align: center;">
-                      <a class="button-a button-a-primary" href="https://google.com/" style="background: #222222; border: 1px solid #000000; font-family: sans-serif; font-size: 15px; line-height: 15px; text-decoration: none; padding: 13px 17px; color: #ffffff; display: block; border-radius: 4px; text-align: center;" target="_blank">Full Width Button</a>
-                    </td>
-                  </tr>
-                </table>
-                <!-- Button : END -->
-              </td>
-            </tr>
-            <!-- FULL WIDTH BUTTON : END -->
-
-            <!-- BUTTON WITH CLICKTRACKING OFF : BEGIN -->
-            <tr>
-              <td style="padding: 0 50px 20px;">
-                <!-- Button : BEGIN -->
-                <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: auto;">
-                  <tr>
-                    <td class="button-td button-td-primary" style="border-radius: 4px; background: #222222;">
-                      <a class="button-a button-a-primary" href="https://google.com/" style="background: #222222; border: 1px solid #000000; font-family: sans-serif; font-size: 15px; line-height: 15px; text-decoration: none; padding: 13px 17px; color: #ffffff; display: block; border-radius: 4px; text-align: center;" target="_blank" clicktracking="off">Click Tracking OFF Button</a>
-                    </td>
-                  </tr>
-                </table>
-                <!-- Button : END -->
-              </td>
-            </tr>
-            <!-- BUTTON WITH CLICKTRACKING OFF : END -->
-
-
-
-            <!-- LIST AS TABLES : BEGIN -->
-            <tr>
-              <td style="font-family: sans-serif; font-size: 15px; line-height: 20px; color: #555555; padding: 50px; text-align: left;" class="">
-                <table role="presentation" cellspacing="0" cellpadding="0" border="0">
-
-                  <!-- ENTRY : BEGIN -->
-                  <tr>
-                    <td valign="top" width="50">
-                      <img src="https://static.ballistixmail.com/synergium/syn13053/1.png" width="42" height="42" alt="alt_text" border="0" style="width: 100%; max-width: 42px; height: auto; background: transparent; ">
-                    </td>
-                    <td valign="top" style="font-family: sans-serif; font-size: 15px; line-height: 20px; color: #555555; padding: 0; text-align: left;">
-                      <p style="margin-top: 0;"><i>Numbered Lists 1</i> - <b>Bullet is top aligned.</b> Preferred by most. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Suscipit pariatur expedita nulla doloremque, harum nemo beatae quidem, sequi debitis necessitatibus.</p>
-                    </td>
-                  </tr>
-                  <!-- ENTRY : END -->
-
-                  <!-- ENTRY : BEGIN -->
-                  <tr>
-                    <td valign="middle" width="50">
-                      <img src="https://static.ballistixmail.com/synergium/syn13053/2.png" width="42" height="42" alt="alt_text" border="0" style="width: 100%; max-width: 42px; height: auto; background: transparent;">
-                    </td>
-                    <td valign="middle" style="font-family: sans-serif; font-size: 15px; line-height: 20px; color: #555555; padding: 0; text-align: left;">
-                      <p style="margin-top: 0;"><i>Numbered Lists 2</i> - <b>Bullet is center aligned.</b> This is good for one-liners. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Suscipit pariatur expedita nulla doloremque, harum nemo beatae quidem, sequi debitis necessitatibus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi neque, eligendi ab repudiandae debitis, suscipit facilis provident dolorem praesentium dignissimos natus, repellendus nobis consequatur quia explicabo assumenda consequuntur architecto ratione magni aliquid qui vitae quasi nulla aperiam fugit. Ea, enim.</p>
-                    </td>
-                  </tr>
-                  <!-- ENTRY : END -->
-
-                  <!-- ENTRY : BEGIN -->
-                  <tr>
-                    <td valign="bottom" width="50">
-                      <img src="https://static.ballistixmail.com/synergium/syn13053/3.png" width="42" height="42" alt="alt_text" border="0" style="width: 100%; max-width: 42px; height: auto; background: transparent;">
-                    </td>
-                    <td valign="bottom" style="font-family: sans-serif; font-size: 15px; line-height: 20px; color: #555555; padding: 0; text-align: left;">
-                      <p style="margin-top: 0;"><i>Numbered Lists 3</i> - <b>Bullet is bottom aligned.</b> No one ever uses this but you never know. Deleniti, rerum facilis officiis dignissimos sequi velit distinctio harum? Quo, libero expedita, officia optio id voluptatem. Consequatur harum quae labore quibusdam, necessitatibus.</p>
-                    </td>
-                  </tr>
-                  <!-- ENTRY : END -->
-
+              <td data-section="1" style="padding-top: 50px; background-color: transparent;" bgcolor="transparent">
+                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                  <tbody>
+                    <tr>
+                      <th valign="bottom" width="50%" class="stack-column-center">
+                        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                          <tbody>
+                            <tr>
+                              <td data-slot-container="1" style="padding-bottom: 15px; text-align: left;"
+                                class="center-on-narrow ui-sortable">
+                                <div data-slot="image">
+                                  <a href="https://link.sample" target="_blank"
+                                    style="display: block; text-decoration: none;">
+                                    <img src="https://40daystemp3.testi.at/placeholder/180x60" alt="logo" /></a>
+                                  <div style="clear:both"></div>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </th>
+                      <th valign="bottom" width="50%" class="stack-column-center">
+                        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                          <tbody>
+                            <tr>
+                              <td data-slot-container="1"
+                                style="font-family: sans-serif; font-size: 15px; line-height: 20px; color: #555555; padding: 15px; text-align: right;"
+                                class="center-on-narrow ui-sortable">
+                                <div data-slot="text" class="center-on-narrow">Date/Text</div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </th>
+                    </tr>
+                  </tbody>
                 </table>
               </td>
             </tr>
-            <!-- LIST AS TABLES : END -->
+          </tbody>
+        </table>
+      </center>
+    </div>
+    <!-- Email Header + 2 Columns : END -->
 
-          </table>
-        </td>
-      </tr>
-      <!-- 1 Column Text + Button : END -->
-
-      <!-- 2 Even Columns : BEGIN -->
-      <tr>
-        <td style="padding: 10px; background-color: #ffffff;">
-          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-            <tr>
-            <!-- Column : BEGIN -->
-            <th align="center" valign="top" width="50%" class="stack-column-center">
+    <!-- Hero Image, Flush : BEGIN -->
+    <div data-section-wrapper="1">
+      <center>
+        <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="600"
+          style="Margin: auto;" class="email-container">
+          <tr>
+            <td data-section="1" bgcolor="#131313;" style="background-color: rgb(19,19,19);">
               <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                 <tr>
-                  <td style="padding: 10px; text-align: center">
-                    <img src="https://via.placeholder.com/270" width="270" height="" alt="alt_text" border="0" style="width: 100%; max-width: 270px; height: auto; background: transparent;">
-                  </td>
-                </tr>
-                <tr>
-                  <td style="font-family: sans-serif; font-size: 15px; line-height: 20px; color: #555555; padding: 0 10px 10px; text-align: left;" class="center-on-narrow">
-                    <p style="margin: 0;">2 Even Column with a padding of 20px and 20px gutter-wdith</p>
-                  </td>
-                </tr>
-                <tr>
-                  <td style="padding: 0 10px 10px;">
-                    <!-- Button : BEGIN -->
-                    <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: auto;">
-                      <tr>
-                        <td class="button-td button-td-primary" style="border-radius: 4px; background: #222222;">
-                          <a class="button-a button-a-primary" href="https://google.com/" style="background: #222222; border: 1px solid #000000; font-family: sans-serif; font-size: 15px; line-height: 15px; text-decoration: none; padding: 13px 17px; color: #ffffff; display: block; border-radius: 4px; text-align: center;" target="_blank">Centered Primary Button</a>
-                        </td>
-                      </tr>
-                    </table>
-                    <!-- Button : END -->
+                  <td data-slot-container="1">
+                    <div data-slot="image">
+                      <a href="https://link.sample" target="_blank" rel="noopener noreferrer"><img
+                          src="https://40daystemp3.testi.at/placeholder/600x320" width="600" height="" alt="alt_text"
+                          border="0"
+                          style="width: 100%; max-width: 680px; height: auto; background: rgb(221, 221, 221); font-family: sans-serif; font-size: 15px; line-height: 15px; color: rgb(85, 85, 85); Margin: auto; display: block;"
+                          class="g-img fr-view" />
+                      </a>
+                      <div style="clear:both"></div>
+                    </div>
                   </td>
                 </tr>
               </table>
-            </th>
-            <!-- Column : END -->
-            <!-- Column : BEGIN -->
-            <th align="center" valign="top" width="50%" class="stack-column-center">
+            </td>
+          </tr>
+        </table>
+      </center>
+    </div>
+    <!-- Hero Image, Flush : END -->
+
+    <!-- 1 Column Text + Background Color : BEGIN -->
+    <div data-section-wrapper="1">
+      <center>
+        <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="600"
+          style="Margin: auto;" class="email-container">
+          <tr>
+            <td data-section="1" bgcolor="#000000;" style="background-color: rgb(0,0,0)">
               <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                 <tr>
-                  <td style="padding: 10px; text-align: center; background: yellow;">
-                    <img src="https://via.placeholder.com/270" width="270" height="" alt="alt_text" border="0" style="width: 100%; max-width: 270px; height: auto; background: transparent;">
-                  </td>
-                </tr>
-                <tr>
-                  <td style="font-family: sans-serif; font-size: 15px; line-height: 20px; color: #555555; padding: 0 10px 10px; text-align: left;" class="center-on-narrow">
-                    <p style="margin: 0;">10px left yellow padding +<br>270px image-width +<br>10px right yellow padding +<br>10px right white padding <br>= 300px column width</p>
-                  </td>
-                </tr>
-                <tr>
-                  <td style="padding: 0 10px 10px;">
-                    <!-- Button : BEGIN -->
-                    <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: auto;">
-                      <tr>
-                        <td class="button-td button-td-primary" style="border-radius: 4px; background: #222222;">
-                          <a class="button-a button-a-primary" href="https://google.com/" style="background: #222222; border: 1px solid #000000; font-family: sans-serif; font-size: 15px; line-height: 15px; text-decoration: none; padding: 13px 17px; color: #ffffff; display: block; border-radius: 4px; text-align: center;" target="_blank">Centered Primary Button</a>
-                        </td>
-                      </tr>
-                    </table>
-                    <!-- Button : END -->
+                  <td data-slot-container="1"
+                    style="padding: 25px 50px; font-family: sans-serif; font-size: 15px; line-height: 21px; color: #FFFFFF;">
+                    <div data-slot="text">
+                      <h1 style="margin-bottom: 15px; font-size: 35px; font-weight: bold; line-height: 42px;">Heading 1
+                        Consectetur Adipiscing aliqua</h1>
+
+                      <p style="margin: 0px 0px 15px; color: #FFFFFF;">Maecenas sed ante pellentesque, posuere leo id,
+                        eleifend dolor. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos
+                        himenaeos. Praesent laoreet malesuada cursus. Maecenas scelerisque congue eros eu posuere.
+                        Praesent in felis ut velit pretium lobortis rhoncus ut&nbsp;erat.</p>
+                    </div>
+
                   </td>
                 </tr>
               </table>
-            </th>
-            <!-- Column : END -->
-            </tr>
-          </table>
-        </td>
-      </tr>
-      <!-- 2 Even Columns : END -->
+            </td>
+          </tr>
+        </table>
+      </center>
+    </div>
+    <!-- 1 Column Text + Background Color : END -->
 
-      <!-- 2 Even Columns with 50px padding : BEGIN -->
-      <tr>
-        <td style="padding: 25px; background-color: #DDDDDD;">
-          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-            <tr>
-            <!-- Column : BEGIN -->
-            <th valign="top" width="50%" class="stack-column-center">
+    <!-- 1 Column Text: BEGIN -->
+    <div data-section-wrapper="1">
+      <center>
+        <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="600"
+          style="Margin: auto;" class="email-container">
+          <tr>
+            <td data-section="1" bgcolor="#ffffff;" style="background-color: rgb(255,255,255)">
               <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                 <tr>
-                  <td style="padding: 25px; text-align: center; background-color: #AAAAAA;">
-                    <img src="https://via.placeholder.com/225" width="225" height="" alt="alt_text" border="0" style="width: 100%; max-width: 225px; height: auto; background: #dddddd;">
-                  </td>
-                </tr>
-                <tr>
-                  <td style="font-family: sans-serif; font-size: 15px; line-height: 20px; color: #555555; padding: 0 25px 25px; text-align: left;" class="center-on-narrow">
-                    <p style="margin: 0;">2 Even Column with a padding of 50px. Always adjust image width accordingly to maintain a total width of 300px for each column</p>
-                  </td>
-                </tr>
-                <tr>
-                  <td style="padding: 0 25px 25px;">
-                    <!-- Button : BEGIN -->
-                    <table align="left" role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: auto;">
-                      <tr>
-                        <td class="button-td button-td-primary" style="border-radius: 4px; background: #222222;">
-                          <a class="button-a button-a-primary" href="https://google.com/" style="background: #222222; border: 1px solid #000000; font-family: sans-serif; font-size: 15px; line-height: 15px; text-decoration: none; padding: 13px 17px; color: #ffffff; display: block; border-radius: 4px; text-align: center;" target="_blank">Left Aligned Button</a>
-                        </td>
-                      </tr>
-                    </table>
-                    <!-- Button : END -->
-                  </td>
-                </tr>
-              </table>
-            </th>
-            <!-- Column : END -->
-            <!-- Column : BEGIN -->
-            <th valign="top" width="50%" class="stack-column-center">
-              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                <tr>
-                  <td style="padding: 25px; text-align: center; background-color: yellow;">
-                    <img src="https://via.placeholder.com/225" width="225" height="" alt="alt_text" border="0" style="width: 100%; max-width: 225px; height: auto; background: #dddddd;">
-                  </td>
-                </tr>
-                <tr>
-                  <td style="font-family: sans-serif; font-size: 15px; line-height: 20px; color: #555555; padding: 0 25px 25px; text-align: left;" class="center-on-narrow">
-                    <p style="margin: 0;">25px left yellow padding + <br>225px image width + <br>25px right yellow padding + <br>25px right grey padding <br>= 300px column width</p>
-                  </td>
-                </tr>
-                <tr>
-                  <td style="padding: 0 25px 25px;">
-                    <!-- Button : BEGIN -->
-                    <table align="right" role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: auto;">
-                      <tr>
-                        <td class="button-td button-td-primary" style="border-radius: 4px; background: #222222;">
-                          <a class="button-a button-a-primary" href="https://google.com/" style="background: #222222; border: 1px solid #000000; font-family: sans-serif; font-size: 15px; line-height: 15px; text-decoration: none; padding: 13px 17px; color: #ffffff; display: block; border-radius: 4px; text-align: center;" target="_blank">Right Aligned Button</a>
-                        </td>
-                      </tr>
-                    </table>
-                    <!-- Button : END -->
-                  </td>
-                </tr>
-              </table>
-            </th>
-            <!-- Column : END -->
-            </tr>
-          </table>
-        </td>
-      </tr>
-      <!-- 2 Even Columns with 50px padding : END -->
+                  <td data-slot-container="1"
+                    style="padding: 25px 50px; font-family: sans-serif; font-size: 15px; line-height: 21px; color: #000000;">
 
-      <!-- 2 Even Columns with full width images padding : BEGIN -->
-      <tr>
-        <td style="padding: 0; background-color: #ffffff;">
-          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-            <tr>
-            <!-- Column : BEGIN -->
-            <th valign="top" width="50%" class="stack-column-center">
-              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                <tr>
-                  <td style="padding: 0; text-align: center">
-                    <img src="https://via.placeholder.com/300" width="300" height="" alt="alt_text" border="0" style="width: 100%; max-width: 300px; height: auto; background: #dddddd; display: block; margin: auto;">
-                  </td>
-                </tr>
-                <tr>
-                  <td style="background: yellow; font-family: sans-serif; font-size: 15px; line-height: 20px; color: #555555; padding: 30px; text-align: left;" class="center-on-narrow">
-                    <p style="margin: 0;">Full column-width images and 30px padding only for text. Added 'display: block;' to image above to make it flush.</p>
-                  </td>
-                </tr>
+                    <div data-slot="text">
 
-                <!-- LIST AS TABLES : BEGIN -->
-                <tr>
-                  <td style="font-family: sans-serif; font-size: 15px; line-height: 20px; color: #555555; padding: 30px; text-align: left;" class="">
-                    <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                      <h1 style="margin-bottom: 16px; font-size: 35px; font-weight: bold; line-height: 42px;">Heading 1
+                        Consectetur Adipiscing aliqua</h1>
 
-                      <!-- ENTRY : BEGIN -->
-                      <tr>
-                        <td width="50">
-                          <img src="https://static.ballistixmail.com/synergium/syn13053/1.png" width="42" height="42" alt="alt_text" border="0" style="max-width: 42px; height: auto; background: transparent;">
-                        </td>
-                        <td style="font-family: sans-serif; font-size: 15px; line-height: 20px; color: #555555; padding: 0; text-align: left;">
-                          <p style="margin: 0;">Numbered Lists 1</p>
-                        </td>
-                      </tr>
-                      <!-- ENTRY : END -->
+                      <p style="margin-bottom: 16px;">Hi {contactfield=firstname}</p>
 
-                      <!-- ENTRY : BEGIN -->
-                      <tr>
-                        <td width="50">
-                          <img src="https://static.ballistixmail.com/synergium/syn13053/2.png" width="42" height="42" alt="alt_text" border="0" style="max-width: 42px; height: auto; background: transparent;">
-                        </td>
-                        <td style="font-family: sans-serif; font-size: 15px; line-height: 20px; color: #555555; padding: 0; text-align: left;">
-                          <p style="margin: 0;">Numbered Lists 2</p>
-                        </td>
-                      </tr>
-                      <!-- ENTRY : END -->
+                      <p style="margin-bottom: 16px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+                        nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute.</p>
 
-                      <!-- ENTRY : BEGIN -->
-                      <tr>
-                        <td width="50">
-                          <img src="https://static.ballistixmail.com/synergium/syn13053/3.png" width="42" height="42" alt="alt_text" border="0" style="max-width: 42px; height: auto; background: transparent;">
-                        </td>
-                        <td style="font-family: sans-serif; font-size: 15px; line-height: 20px; color: #555555; padding: 0; text-align: left;">
-                          <p style="margin: 0;">Numbered Lists 3</p>
-                        </td>
-                      </tr>
-                      <!-- ENTRY : END -->
-
-                    </table>
-                  </td>
-                </tr>
-                <!-- LIST AS TABLES : END -->
-
-              </table>
-            </th>
-            <!-- Column : END -->
-            <!-- Column : BEGIN -->
-            <th valign="top" width="50%" class="stack-column-center">
-              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                <tr>
-                  <td style="padding: 0; text-align: center">
-                    <img src="https://via.placeholder.com/300" width="300" height="" alt="alt_text" border="0" style="width: 100%; max-width: 300px; height: auto; background: transparent;">
-                  </td>
-                </tr>
-                <tr>
-                  <td style="background: yellow; font-family: sans-serif; font-size: 15px; line-height: 20px; color: #555555; padding: 30px; text-align: left;" class="center-on-narrow">
-                    <p style="margin: 0;">Images by default has 'display: inline;' which causes a small gap under it, to fix it, add 'display: block;' to image.</p>
-                  </td>
-                </tr>
-                <tr>
-                  <td style="padding: 0 25px 25px;">
-                    <!-- Button : BEGIN -->
-                    <table align="left" role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: auto;">
-                      <tr>
-                        <td class="button-td button-td-primary" style="border-radius: 4px; background: #222222;">
-                          <a class="button-a button-a-primary" href="https://google.com/" style="background: #222222; border: 1px solid #000000; font-family: sans-serif; font-size: 15px; line-height: 15px; text-decoration: none; padding: 13px 17px; color: #ffffff; display: block; border-radius: 4px; text-align: center;" target="_blank">Left Aligned Button</a>
-                        </td>
-                      </tr>
-                    </table>
-                    <!-- Button : END -->
-                  </td>
-                </tr>
-                <tr>
-                  <td style="padding: 0 25px 25px;">
-                    <!-- Button : BEGIN -->
-                    <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: auto;">
-                      <tr>
-                        <td class="button-td button-td-primary" style="border-radius: 4px; background: #222222;">
-                          <a class="button-a button-a-primary" href="https://google.com/" style="background: #222222; border: 1px solid #000000; font-family: sans-serif; font-size: 15px; line-height: 15px; text-decoration: none; padding: 13px 17px; color: #ffffff; display: block; border-radius: 4px; text-align: center;" target="_blank">Center Aligned Button</a>
-                        </td>
-                      </tr>
-                    </table>
-                    <!-- Button : END -->
-                  </td>
-                </tr>
-                <tr>
-                  <td style="padding: 0 25px 25px;">
-                    <!-- Button : BEGIN -->
-                    <table align="right" role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: auto;">
-                      <tr>
-                        <td class="button-td button-td-primary" style="border-radius: 4px; background: #222222;">
-                          <a class="button-a button-a-primary" href="https://google.com/" style="background: #222222; border: 1px solid #000000; font-family: sans-serif; font-size: 15px; line-height: 15px; text-decoration: none; padding: 13px 17px; color: #ffffff; display: block; border-radius: 4px; text-align: center;" target="_blank">Right Aligned Button</a>
-                        </td>
-                      </tr>
-                    </table>
-                    <!-- Button : END -->
-                  </td>
-                </tr>
-              </table>
-            </th>
-            <!-- Column : END -->
-            </tr>
-          </table>
-        </td>
-      </tr>
-      <!-- 2 Even Columns : END -->
-
-      <!-- 2 Even Columns with IMAGE on ONE SIDE, TEXT on THE OTHER : BEGIN -->
-      <tr>
-        <td style="padding: 0; background-color: #ffffff;">
-          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-            <tr>
-            <!-- Column : BEGIN -->
-            <th valign="middle" width="50%" class="stack-column-center">
-              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                <tr>
-                  <td style="padding: 0; text-align: center">
-                    <img src="https://via.placeholder.com/300" width="300" height="" alt="alt_text" border="0" style="width: 100%; max-width: 300px; height: auto; background: #dddddd; display: block; margin: auto;">
-                  </td>
-                </tr>
-              </table>
-            </th>
-            <!-- Column : END -->
-            <!-- Column : BEGIN -->
-            <th valign="middle" width="50%" class="stack-column-center">
-              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                <tr>
-                  <td style="font-family: sans-serif; font-size: 15px; line-height: 20px; color: #555555; padding: 30px; text-align: left;" class="center-on-narrow">
-                    <p style="margin: 0;">Image on the left. Text on the right</p>
-                  </td>
-                </tr>
-                <tr>
-                  <td style="padding: 0 25px 25px;">
-                    <!-- Button : BEGIN -->
-                    <table align="left" role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: auto;">
-                      <tr>
-                        <td class="button-td button-td-primary" style="border-radius: 4px; background: #222222;">
-                          <a class="button-a button-a-primary" href="https://google.com/" style="background: #222222; border: 1px solid #000000; font-family: sans-serif; font-size: 15px; line-height: 15px; text-decoration: none; padding: 13px 17px; color: #ffffff; display: block; border-radius: 4px; text-align: center;">Left Aligned Button</a>
-                        </td>
-                      </tr>
-                    </table>
-                    <!-- Button : END -->
-                  </td>
-                </tr>
-              </table>
-            </th>
-            <!-- Column : END -->
-            </tr>
-          </table>
-        </td>
-      </tr>
-      <!-- 2 Even Columns : END -->
-
-      <!-- Thumbnail Left, Text Right : BEGIN -->
-      <tr>
-        <td dir="ltr" width="100%" style="padding: 10px; background-color: #ffffff;">
-          <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
-            <tr>
-              <!-- Column : BEGIN -->
-              <th width="33.33%" class="stack-column-center">
-                <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
-                  <tr>
-                    <td dir="ltr" valign="top" style="padding: 0 10px;">
-                      <img src="https://via.placeholder.com/170" width="170" height="170" alt="alt_text" border="0" class="center-on-narrow" style="height: auto; background: transparent;">
-                    </td>
-                  </tr>
-                </table>
-              </th>
-              <!-- Column : END -->
-              <!-- Column : BEGIN -->
-              <th width="66.66%" class="stack-column-center">
-                <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
-                  <tr>
-                    <td dir="ltr" valign="top" style="font-family: sans-serif; font-size: 15px; line-height: 20px; color: #555555; padding: 10px; text-align: left;" class="center-on-narrow">
-                      <h2 style="margin: 0 0 10px 0; font-family: sans-serif; font-size: 18px; line-height: 22px; color: #333333; font-weight: bold;">Class aptent taciti sociosqu</h2>
-                      <p style="margin: 0 0 10px 0;">Maecenas sed ante pellentesque, posuere leo id, eleifend dolor. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
-                      <!-- Button : BEGIN -->
-                      <table role="presentation" cellspacing="0" cellpadding="0" border="0" class="center-on-narrow" style="float:left;">
-                      <tr>
-                      <td class="button-td button-td-primary" style="border-radius: 4px; background: #222222;">
-                      <a class="button-a button-a-primary" href="https://google.com/" style="background: #222222; border: 1px solid #000000; font-family: sans-serif; font-size: 15px; line-height: 15px; text-decoration: none; padding: 13px 17px; color: #ffffff; display: block; border-radius: 4px; text-align: center;">Primary Button</a>
-                      </td>
-                      </tr>
+                      <p style="margin-bottom: 16px;">Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                        commodo consequat. Duis aute labore et dolore magna. <a href="https://link.sample"
+                          style="text-decoration: none; color: #000000; font-weight: bold;">LEARN MORE ></a></p>
+                      
+                      <!-- Button: BEGIN -->
+                      <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: auto;">
+                        <tr>
+                          <td class="button-td button-td-primary" style="border-radius: 4px; background: #222222;">
+                            <a class="button-a button-a-primary" href="https://google.com/" style="background: #222222; border: 1px solid #000000; font-family: sans-serif; font-size: 15px; line-height: 15px; text-decoration: none; padding: 13px 17px; color: #ffffff; display: block; border-radius: 4px;">Primary Button</a>
+                          </td>
+                        </tr>
                       </table>
-                      <!-- Button : END -->
-                    </td>
-                  </tr>
-                </table>
-              </th>
-              <!-- Column : END -->
-            </tr>
-          </table>
-        </td>
-      </tr>
-      <!-- Thumbnail Left, Text Right : END -->
+                      <!-- Button: END -->
 
-      <!-- Thumbnail Right, Text Left : BEGIN -->
-      <tr>
-        <td dir="rtl" width="100%" style="padding: 10px; background-color: #ffffff;">
-          <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
-            <tr>
-            <!-- Column : BEGIN -->
-              <th width="33.33%" class="stack-column-center">
-                <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
-                  <tr>
-                    <td dir="ltr" valign="top" style="padding: 0 10px;">
-                      <img src="https://via.placeholder.com/170" width="170" height="170" alt="alt_text" border="0" class="center-on-narrow" style="height: auto; background: transparent;">
-                    </td>
-                  </tr>
-                </table>
-              </th>
-            <!-- Column : END -->
-            <!-- Column : BEGIN -->
-            <th width="66.66%" class="stack-column-center">
-              <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
-                <tr>
-                  <td dir="ltr" valign="top" style="font-family: sans-serif; font-size: 15px; line-height: 20px; color: #555555; padding: 10px; text-align: left;" class="center-on-narrow">
-                    <h2 style="margin: 0 0 10px 0; font-family: sans-serif; font-size: 18px; line-height: 22px; color: #333333; font-weight: bold;">Class aptent taciti sociosqu</h2>
-                    <p style="margin: 0 0 10px 0;">Maecenas sed ante pellentesque, posuere leo id, eleifend dolor. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
-                    <!-- Button : BEGIN -->
-                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" class="center-on-narrow" style="float:left;">
-                      <tr>
-                        <td class="button-td button-td-primary" style="border-radius: 4px; background: #222222;">
-                          <a class="button-a button-a-primary" href="https://google.com/" style="background: #222222; border: 1px solid #000000; font-family: sans-serif; font-size: 15px; line-height: 15px; text-decoration: none; padding: 13px 17px; color: #ffffff; display: block; border-radius: 4px; text-align: center;">Primary Button</a>
-                        </td>
-                      </tr>
-                    </table>
-                    <!-- Button : END -->
+                      <h2 style="margin-bottom: 16px; font-size: 26px; font-weight: bold; line-height: 34px;">Heading 2
+                        dolor sit amet Heading 2 dolor sit amet dolor sit amet</h2>
+
+                      <p style="margin-bottom: 16px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+                        nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute. Quis
+                        nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute labore
+                        et dolore magna.</p>
+
+                      <p style="margin-bottom: 16px;">Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                        commodo consequat. Duis aute.</p>
+
+                      <h3 style="margin-bottom: 16px; font-size: 21px; font-weight: bold; line-height: 27px;">Heading 3
+                        Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute.
+                      </h3>
+                      <p style="margin-bottom: 16px;">Bullets version 1</p>
+                      <ul>
+                        <li>Lorem ipsum dolor sit amet incididunt ut labore et dolore magna aliqua</li>
+                        <li>Lorem ipsum dolor sit amet incididunt ut labore et dolore magna aliqua</li>
+                        <li>Lorem ipsum dolor sit amet incididunt ut labore et dolore magna aliqua</li>
+                      </ul>
+                      <p style="margin-bottom: 16px;">Bullets version 2</p>
+                      <ul style="padding: 0; margin: 0; list-style-type: disc;">
+                        <li style="margin:0 0 16px 40px;">Lorem ipsum dolor sit amet incididunt ut labore et dolore
+                          magna aliqua</li>
+                        <li style="margin:0 0 16px 40px;">Lorem ipsum dolor sit amet incididunt ut labore et dolore
+                          magna aliqua</li>
+                        <li style="margin:0 0 16px 40px;">Lorem ipsum dolor sit amet incididunt ut labore et dolore
+                          magna aliqua</li>
+                      </ul>
+                      <br />
+                    </div>
+                    <div data-slot="text">
+                      <table class="fr-dashed-borders" cellpadding="0" cellspacing="0" width="100%">
+                        <thead style="background-color: #E9E9E9">
+                          <tr>
+                            <th class="fr-thick fr-highlighted aligncell-left"
+                              style="padding: 8px; font-family: sans-serif;"><b>Heading 1</b></th>
+                            <th class="fr-thick fr-highlighted" style="padding: 8px; font-family: sans-serif;">
+                              <b>Heading 2</b></th>
+                            <th class="fr-thick fr-highlighted" style="padding: 8px; font-family: sans-serif;">
+                              <b>Heading 3</b></th>
+                          </tr>
+
+                        </thead>
+
+                        <tbody>
+                          <tr>
+                            <td style="padding: 8px; font-family: sans-serif;">Item 1</td>
+                            <td style="text-align: center; padding: 8px; font-family: sans-serif;">data 1a</td>
+                            <td style="text-align: center; padding: 8px; font-family: sans-serif;">data 1b</td>
+                          </tr>
+                          <tr>
+                            <td style="padding: 8px; font-family: sans-serif;">Item 2</td>
+                            <td style="text-align: center; padding: 8px; font-family: sans-serif;">data 1a</td>
+                            <td style="text-align: center; padding: 8px; font-family: sans-serif;">data 1b</td>
+                          </tr>
+
+                          <tr>
+                            <td style="padding: 8px; font-family: sans-serif;">Item 3</td>
+                            <td style="text-align: center; padding: 8px; font-family: sans-serif;">data 1a</td>
+                            <td style="text-align: center; padding: 8px; font-family: sans-serif;">data 1b</td>
+                          </tr>
+
+                          <tr>
+                            <td style="padding: 8px; font-family: sans-serif;">Item 4</td>
+                            <td style="text-align: center; padding: 8px; font-family: sans-serif;">data 1a</td>
+                            <td style="text-align: center; padding: 8px; font-family: sans-serif;">data 1b</td>
+                          </tr>
+
+                          <tr>
+                            <td style="padding: 8px; font-family: sans-serif;">Item 5</td>
+                            <td style="text-align: center; padding: 8px; font-family: sans-serif;">data 1a</td>
+                            <td style="text-align: center; padding: 8px; font-family: sans-serif;">data 1b</td>
+                          </tr>
+
+                          <tr>
+                            <td style="padding: 8px; font-family: sans-serif;">Item 6</td>
+                            <td style="text-align: center; padding: 8px; font-family: sans-serif;">data 1a</td>
+                            <td style="text-align: center; padding: 8px; font-family: sans-serif;">data 1b</td>
+                          </tr>
+
+                          <tr>
+                            <td style="padding: 8px; font-family: sans-serif;">Item 7</td>
+                            <td style="text-align: center; padding: 8px; font-family: sans-serif;">data 1a</td>
+                            <td style="text-align: center; padding: 8px; font-family: sans-serif;">data 1b</td>
+                          </tr>
+
+                          <tr>
+                            <td style="padding: 8px; font-family: sans-serif;">Item 8</td>
+                            <td style="text-align: center; padding: 8px; font-family: sans-serif;">data 1a</td>
+                            <td style="text-align: center; padding: 8px; font-family: sans-serif;">data 1b</td>
+                          </tr>
+
+                          <tr>
+                            <td style="padding: 8px; font-family: sans-serif;">Item 9</td>
+                            <td style="text-align: center; padding: 8px; font-family: sans-serif;">data 1a</td>
+                            <td style="text-align: center; padding: 8px; font-family: sans-serif;">data 1b</td>
+                          </tr>
+
+                          <tr>
+                            <td style="padding: 8px; font-family: sans-serif;">Item 10</td>
+                            <td style="text-align: center; padding: 8px; font-family: sans-serif;">data 1a</td>
+                            <td style="text-align: center; padding: 8px; font-family: sans-serif;">data 1b</td>
+                          </tr>
+                        </tbody>
+
+                      </table>
+
+                      <br />
+
+                    </div>
+                    
+                    <div data-slot="text">
+                      <p style="margin-bottom: 16px;">Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                        commodo consequat. Duis aute. At vero eos et accusam et justo duo dolores et ea rebum. Stet
+                        clita kasd gubergren, no sea takimata sanctus est.</p>
+                      <p>Name Surname
+                        <br><span style="color: #A0A0A0;">Title</span>
+                      </p>
+                    </div>
+
                   </td>
                 </tr>
               </table>
-            </th>
-            <!-- Column : END -->
-            </tr>
-          </table>
-        </td>
-      </tr>
-      <!-- Thumbnail Right, Text Left : END -->
+            </td>
+          </tr>
+        </table>
+      </center>
+    </div>
+    <!-- 1 Column Text: END -->
 
-      <!-- 1 Column Text : BEGIN -->
-      <tr>
-        <td>
-          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-            <tr>
-              <td style="padding: 20px 20px 0; font-family: sans-serif; font-size: 13px; font-weight: bold; line-height: 20px; color: #555555; text-align: center;">
-              <p>DIVIDER LINE:</p>
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
-      <!-- 1 Column Text : END -->
+    <!-- 2 Column Text + Image Left : BEGIN -->
+    <div data-section-wrapper="1">
+      <center>
+        <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="600"
+          style="Margin: auto;" class="email-container">
+          <tr>
+            <td data-section="1" bgcolor="#ffffff" style="background-color: rgb(255,255,255); padding: 0 25px;">
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                <tr>
+                  <th valign="top" width="50%" class="stack-column-center">
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                      <tr>
+                        <td data-slot-container="1" style="padding: 25px; text-align: left;" class="center-on-narrow">
+                          <div data-slot="image">
+                            <img src="https://40daystemp3.testi.at/placeholder/225x225" alt="alt_text" />
+                          </div>
+                        </td>
+                      </tr>
 
-      <!-- Clear Spacer : BEGIN -->
-      <tr>
-        <td aria-hidden="true" height="10" style="font-size: 0px; line-height: 0px;">
-        &nbsp;
-        </td>
-      </tr>
-      <!-- Clear Spacer : END -->
+                    </table>
+                  </th>
+                  <th valign="top" width="50%" class="stack-column-center">
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                      <tr>
+                        <td data-slot-container="1"
+                          style="font-family: sans-serif; font-size: 15px; line-height: 21px; color: #000000; padding: 25px; text-align: left;"
+                          class="center-on-narrow">
+                          <div data-slot="text" class="center-on-narrow">
+                            <h3
+                              style="mso-line-height-rule:exactly; Margin: 0 0 10px; font-size: 20px; line-height: 24px; color: #000000; font-weight: bold;">
+                              Image Left</h3>
+                            <p style="Margin: 0 0 10px; font-weight: normal;">Maecenas sed ante pellentesque, posuere
+                              leo id, eleifend dolor. Class aptent taciti sociosqu ad litora torquent per conubia
+                              nostra, per inceptos himenaeos. Praesent laoreet malesuada cursus. Maecenas scelerisque
+                              congue eros eu posuere. </p>
+                          </div>
+                        </td>
+                      </tr>
+                    </table>
+                  </th>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </center>
+    </div>
+    <!-- 2 Column Text + Image Left : END -->
 
-      <!-- FULL WIDTH DIVIDER : BEGIN -->
-      <tr>
-        <td aria-hidden="true" height="40" style="font-size: 0px; line-height: 0px; border-top: 1px solid yellow;">
-        &nbsp;
-        </td>
-      </tr>
-      <!-- FULL WIDTH DIVIDER : END -->
+    <!-- 2 Column Text + Image Right : BEGIN -->
+    <div data-section-wrapper="1">
+      <center>
+        <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="600"
+          style="Margin: auto;" class="email-container">
+          <tr>
+            <td data-section="1" bgcolor="#ffffff;" style="background-color: rgb(255,255,255); padding: 0 25px;">
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                <tr>
+                  <th valign="top" width="50%" class="stack-column-center">
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                      <tr>
+                        <td data-slot-container="1"
+                          style="font-family: sans-serif; font-size: 15px; line-height: 21px; color: #000000; padding: 25px; text-align: left;"
+                          class="center-on-narrow">
+                          <div data-slot="text" class="center-on-narrow">
+                            <h3
+                              style="mso-line-height-rule:exactly; Margin: 0 0 10px; font-size: 20px; line-height: 24px; color: #000000; font-weight: bold;">
+                              Image Right</h3>
+                            <p style="Margin: 0 0 10px; font-weight: normal;">Maecenas sed ante pellentesque, posuere
+                              leo id, eleifend dolor. Class aptent taciti sociosqu ad litora torquent per conubia
+                              nostra, per inceptos himenaeos. Praesent laoreet malesuada cursus. Maecenas scelerisque
+                              congue eros eu posuere. </p>
+                          </div>
+                        </td>
+                      </tr>
 
-      <!-- Clear Spacer : BEGIN -->
-      <tr>
-        <td aria-hidden="true" height="40" style="font-size: 0px; line-height: 0px;">
-        &nbsp;
-        </td>
-      </tr>
-      <!-- Clear Spacer : END -->
+                    </table>
+                  </th>
+                  <th valign="top" width="50%" class="stack-column-center">
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                      <tr>
+                        <td data-slot-container="1"
+                          style="font-family: sans-serif; color: #000000; padding:  25px; text-align: left;"
+                          class="center-on-narrow">
+                          <div data-slot="image">
+                            <img src="https://40daystemp3.testi.at/placeholder/225x225" alt="alt_text" />
+                          </div>
 
-      <!-- 1 Column Text : BEGIN -->
-      <tr>
-        <td style="background-color: #ffffff;">
-          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-            <tr>
-              <td style="padding: 20px; font-family: sans-serif; font-size: 15px; line-height: 20px; color: #555555;">
-              Maecenas sed ante pellentesque, posuere leo id, eleifend dolor. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent laoreet malesuada cursus. Maecenas scelerisque congue eros eu posuere. Praesent in felis ut velit pretium lobortis rhoncus ut&nbsp;erat.
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
-      <!-- 1 Column Text : END -->
+                        </td>
+                      </tr>
+                    </table>
+                  </th>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </center>
+    </div>
+    <!-- 2 Column Text + Image Right : END -->
 
-    </table>
-    <!-- Email Body : END -->
+    <!-- 2 Column Text and Image : BEGIN -->
+    <div data-section-wrapper="1">
+      <center>
+        <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="600"
+          style="Margin: auto;" class="email-container">
+          <tr>
+            <td data-section="1" bgcolor="#F7F7F7" style="background-color: rgb(247, 247, 247); padding: 0 25px;">
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                <tr>
+                  <th valign="top" width="50%" class="stack-column-center">
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                      <tr>
+                        <td data-slot-container="1"
+                          style="font-family: sans-serif; font-size: 15px; line-height: 21px; color: #000000; padding: 25px; text-align: left;"
+                          class="center-on-narrow">
+                          <div data-slot="image">
+                            <img src="https://40daystemp3.testi.at/placeholder/225x225" alt="alt_text" />
+                          </div>
+                          <div data-slot="text" class="center-on-narrow">
+                            <br />
+                            <h3
+                              style="mso-line-height-rule:exactly; Margin: 0 0 10px; font-size: 20px; line-height: 24px; color: #000000; font-weight: bold;">
+                              Column 1</h3>
+                            <p style="Margin: 0 0 10px; font-weight: normal;">Maecenas sed ante pellentesque, posuere
+                              leo id, eleifend dolor. Class aptent taciti sociosqu ad litora torquent per conubia
+                              nostra, per inceptos himenaeos. Praesent laoreet malesuada cursus. Maecenas scelerisque
+                              congue eros eu posuere. </p>
+                          </div>
+                        </td>
+                      </tr>
+
+                    </table>
+                  </th>
+                  <th valign="top" width="50%" class="stack-column-center">
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                      <tr>
+                        <td data-slot-container="1"
+                          style="font-family: sans-serif; font-size: 15px; line-height: 21px; color: #000000; padding: 25px; text-align: left;"
+                          class="center-on-narrow">
+                          <div data-slot="image">
+                            <img src="https://40daystemp3.testi.at/placeholder/225x225" alt="alt_text" />
+                          </div>
+                          <div data-slot="text" class="center-on-narrow">
+                            <br />
+                            <h3
+                              style="mso-line-height-rule:exactly; Margin: 0 0 10px; font-size: 20px; line-height: 24px; color: #000000; font-weight: bold;">
+                              Column 2</h3>
+                            <p style="Margin: 0 0 10px; font-weight: normal;">Maecenas sed ante pellentesque, posuere
+                              leo id, eleifend dolor. Class aptent taciti sociosqu ad litora torquent per conubia
+                              nostra, per inceptos himenaeos. Praesent laoreet malesuada cursus. Maecenas scelerisque
+                              congue eros eu posuere. </p>
+                          </div>
+                        </td>
+                      </tr>
+                    </table>
+                  </th>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </center>
+    </div>
+    <!-- 2 Column Text and Image : END -->
+
+    <!-- 1 Column Text and Image : BEGIN -->
+    <div data-section-wrapper="1">
+      <center>
+        <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="600"
+          style="Margin: auto;" class="email-container">
+          <tr>
+            <td data-section="1" bgcolor="#ffffff;" style="background-color: rgb(255,255,255);">
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                <tr>
+                  <td data-slot-container="1"
+                    style="padding: 25px 50px; font-family: sans-serif; font-size: 15px; line-height: 21px; color: #000000;">
+                    <div data-slot="image">
+                      <a href="https://link.sample" target="_blank" rel="noopener noreferrer"><img
+                          src="https://40daystemp3.testi.at/placeholder/500x320" width="500" height="" alt="alt_text"
+                          border="0"
+                          style="width: 100%; max-width: 500px; height: auto; background: rgb(221, 221, 221); font-family: sans-serif; font-size: 15px; line-height: 15px; color: rgb(85, 85, 85); Margin: auto; display: block;"
+                          class="g-img fr-view" />
+                      </a>
+                      <div style="clear:both"></div>
+                    </div>
+                    <div data-slot="text">
+                      <br />
+                      <h3
+                        style="mso-line-height-rule:exactly; Margin: 0 0 10px; font-size: 20px; line-height: 24px; color: #000000; font-weight: bold;">
+                        Praesent laoreet malesuada&nbsp;cursus.</h3>
+                      <p style="Margin: 0 0 10px; font-weight: normal;">Maecenas sed ante pellentesque, posuere leo id,
+                        eleifend dolor. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos
+                        himenaeos. Praesent laoreet malesuada cursus. Maecenas scelerisque congue eros eu posuere.
+                        Praesent in felis ut velit pretium lobortis rhoncus ut&nbsp;erat.</p>
+                    </div>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </center>
+    </div>
+    <!-- 1 Column Text and Image : END -->
 
     <!-- Email Footer : BEGIN -->
-    <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" style="margin: auto;" class="email-container">
-      <tr>
-        <td style="padding: 20px; font-family: sans-serif; font-size: 12px; line-height: 15px; text-align: center; color: #cccccc;">
-          <a href="{webview_url}" style="color: #cccccc; text-decoration: underline; font-weight: bold;" target="_blank">View as a Web Page</a>
-          <br><br>
-          Company Name<br><span class="unstyle-auto-detected-links">123 Fake Street, SpringField, OR, 97477 US<br>(123) 456-7890</span>
-          <br><br>
-          <a href="{unsusbcribe_url}" style="color: #cccccc; text-decoration: underline;" target="_blank">unsubscribe</a>
-        </td>
-      </tr>
-    </table>
+    <div data-section-wrapper="1">
+      <center>
+        <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="600"
+          style="Margin: auto;" class="email-container">
+          <tr>
+            <td data-section="1" bgcolor="#000000;" style="background-color: rgb(0,0,0);">
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                <tr>
+                  <td data-slot-container="1"
+                    style="padding: 25px 50px; font-family: sans-serif; font-size: 15px; line-height: 21px; color: #000000;">
+                    <div data-slot="text">
+                      <p style="text-align: center;">
+                        <a href="https://link.sample" target="_blank" style="text-decoration: none;">
+                          <img style="margin-bottom: 15px; display: inline-block;"
+                            src="https://40daystemp3.testi.at/placeholder/180x60" alt="" />
+                        </a>
+                        <br />
+                        <a href="https://link.sample" target="_blank"
+                          style="font-size: 13px; color: #FFFFFF; text-decoration: none;">info@companyname.com</a>
+                        <a href="tel:000000" target="_blank"
+                          style="font-size: 13px; color: #FFFFFF; text-decoration: none;">+00 (0) 00 000 0000</a>
+                        <br />
+                        <a href="https://link.sample" target="_blank"
+                          style="text-decoration: none; color: #FFFFFF; font-size:16px; ">companyname.com</a>
+                        <br /><br />
+
+                        <a href="https://link.sample" target="_blank"
+                          style=" color: #FFFFFF; text-decoration: none;"><img
+                            src="https://s3.us-east-1.amazonaws.com/static2.ballistixmail.com/master-edm-assets/padded_w_linked-in.png"
+                            alt="Linkedin" width="34" height="20" /></a>
+
+                        <a href="https://link.sample" target="_blank"
+                          style=" color: #FFFFFF; text-decoration: none;"><img
+                            src="https://s3.us-east-1.amazonaws.com/static2.ballistixmail.com/master-edm-assets/padded_w_facebook.png"
+                            alt="Facebook" width="34" height="20" /></a>
+
+                        <a href="https://link.sample" target="_blank"
+                          style="color: #FFFFFF; text-decoration: none;"><img
+                            src="https://s3.us-east-1.amazonaws.com/static2.ballistixmail.com/master-edm-assets/padded_w_instagram.png"
+                            alt="Instagram" width="34" height="20" /></a>
+
+                        <a href="https://link.sample" target="_blank"
+                          style="color: #FFFFFF; text-decoration: none;"><img
+                            src="https://s3.us-east-1.amazonaws.com/static2.ballistixmail.com/master-edm-assets/padded_w_twitter.png"
+                            alt="Twitter" width="34" height="20" /></a>
+
+                        <a href="https://link.sample" target="_blank"
+                          style="color: #FFFFFF; text-decoration: none;"><img
+                            src="https://s3.us-east-1.amazonaws.com/static2.ballistixmail.com/master-edm-assets/padded_w_youtube.png"
+                            alt="YouTube" width="42" height="20" /></a>
+
+                      </p>
+                    </div>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </center>
+    </div>
     <!-- Email Footer : END -->
+
+    <!-- Email Copyrights : BEGIN -->
+    <div data-section-wrapper="1">
+      <center>
+        <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="600"
+          style="Margin: auto;" class="email-container">
+          <tr>
+            <td data-section="1" bgcolor="transparent;" style="background-color: transparent;">
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                <tr>
+                  <td data-slot-container="1"
+                    style="padding: 25px 50px 50px 50px; font-family: sans-serif; font-size: 15px; line-height: 18px; color: #000000;">
+
+                    <div data-slot="text">
+
+                      <p
+                        style="font-size: 11px; line-height: 16px; text-align: center; color: #B8B8B8; font-weight:normal;">
+                        Company Name<br />
+                        Address<br />
+                        Phone<br />
+                        © 2022 All Rights Reserved.<br /><br />
+                        {unsubscribe_text}
+                      </p>
+
+                    </div>
+
+                  </td>
+                </tr>
+
+
+              </table>
+            </td>
+          </tr>
+        </table>
+      </center>
+    </div>
+    <!-- Email Copyrights : END -->
 
     <!--[if mso | IE]>
     </td>
     </tr>
     </table>
     <![endif]-->
-    </center>
-  </body>
-  </html>
+  </center>
+</body>
+
+</html>
