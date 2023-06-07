@@ -173,6 +173,13 @@
       text-align: left;
     }
 
+      .stack-reverse-left {
+        float: left;
+      }
+      .stack-reverse-right {
+        float: right;
+      }
+
     /* Media Queries */
     @media screen and (max-width: 600px) {
       .email-container {
@@ -223,13 +230,7 @@
         padding-left: 20px !important;
         padding-right: 20px !important;
       }
-      .stack-reverse-left {
-        float: left;
-      }
-      .stack-reverse-right {
-        float: right;
-      }
-
+      
     }
   </style>
   <!-- Progressive Enhancements : END -->
@@ -405,6 +406,8 @@
                         Consectetur Adipiscing aliqua</h1>
 
                       <p style="margin: 0px 0px 16px;">Hi {contactfield=firstname}</p>
+
+                      <p style="margin: 0px 0px 16px;">Hi $contacts-firstname$</p>                
 
                       <p style="margin: 0px 0px 16px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
                         eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
