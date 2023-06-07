@@ -17,7 +17,7 @@
  - ~~In the img src styling, have the background as transparent~~
  - ~~Add the narrow-padding-on-narrow class~~
  - ~~Add a lot of the ‘Preview Text Spacing Hack’ code so that it pushes the content of the email completely out of the preview text when an email is sent~~
- - Add in both contact name codes for both Mautic and vTiger
+ - ~~Add in both contact name codes for both Mautic and vTiger~~
  - ~~Make the alt text blank so it appears as alt=""~~
  - ~~Update subscribe link in footer to~~
 
